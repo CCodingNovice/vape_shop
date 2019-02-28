@@ -1,6 +1,5 @@
 import pandas as pd
-#  я учусь пользовться гитом
-#  еще одна попытка
+
 def create_database(my_data):
     df = pd.DataFrame({
         "id": my_data[0],
