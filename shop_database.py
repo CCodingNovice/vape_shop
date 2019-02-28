@@ -1,5 +1,5 @@
 import pandas as pd
-
+#  я учусь пользовться гитом
 
 def create_database(my_data):
     df = pd.DataFrame({
