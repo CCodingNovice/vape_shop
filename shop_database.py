@@ -1,23 +1,24 @@
 import pandas as pd
 
-def create_database(my_data):
-    df = pd.DataFrame({
-        "id": my_data[0],
-        "name": my_data[1],
-        "price": my_data[2],
-        "amount": my_data[3]
-    })
-    df.to_csv("vapeshop.csv")
+
+def create_new_df(cols):
+    df = pd.DataFrame(data=None, columns=cols)
+    return df
 
 
-def insert_to_database(my_data):
-    db_data = pd.read_csv("vapeshop.csv")
-    for d in my_data:
-        db_data.loc[db_data.__len__()] = d
+def add_to_df(df, item):
+    df.loc[item[0]] = item[1:]
+    return df
 
 
-def get_data_from_db():
-    data = pd.read_csv("vapeshop.csv")
-    output = [[], [], [], []]
-    output = data.to_list()
-    return output
+def save_df_as_csv(df, path='database_example.csv'):
+    df.to_csv(path_or_buf=path)
+
+
+def load_csv_to_df(path='database_example.csv'):
+    df = pd.read_csv(filepath_or_buffer=path, index_col=0)
+    return df
+
+
+cols = ['type', 'name', 'price']  # column names
+DF = create_new_df(cols)
