@@ -1,17 +1,21 @@
 from tkinter import *
 
 
+def destroy_widgets():
+    for t in range(0, 6):
+        for widget in main_window.grid_slaves(row=3, column=t):
+            widget.destroy()
+        for widget in main_window.grid_slaves(row=4, column=t):
+            widget.destroy()
+        for widget in main_window.grid_slaves(row=5, column=t):
+            widget.destroy()
+
+
 def menu_pick(event):
     w = event.widget
     selection = int(w.curselection()[0])
     if selection == 0:
-        for t in range(0, 5):
-            for widget in main_window.grid_slaves(row=3, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=4, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=5, column=t):
-                widget.destroy()
+        destroy_widgets()
         # developing new bottom widgets
 
         INFO_LABEL = Label(main_window, text="Вставить в базу данных",
@@ -37,13 +41,7 @@ def menu_pick(event):
                              ).grid(row=5, column=0, columnspan=5, sticky="nwe")
     if selection == 1:
         # destruction of others bottom widgets
-        for t in range(0, 6):
-            for widget in main_window.grid_slaves(row=3, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=4, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=5, column=t):
-                widget.destroy()
+        destroy_widgets()
         # developing new bottom widgets
         INFO_LABEL = Label(main_window, text="Удалить из базы данных",
                            background="#1c0f21",
@@ -54,10 +52,10 @@ def menu_pick(event):
                            ).grid(row=4, column=0, sticky="nswe", padx=5, pady=5)
         variable = StringVar(main_window)
         variable.set("Все категории")
-        FIND_IN_COL = OptionMenu(main_window, variable, "Все категории", "id", "type", "name", "amount", "price")
-        FIND_IN_COL.config(bg="gray")
-        FIND_IN_COL["menu"].config(bg="gray")
-        FIND_IN_COL.grid(row=4, column=1, sticky="swe", padx=5, pady=5)
+        find_in_col = OptionMenu(main_window, variable, "Все категории", "id", "type", "name", "amount", "price")
+        find_in_col.config(bg="gray")
+        find_in_col["menu"].config(bg="gray")
+        find_in_col.grid(row=4, column=1, sticky="swe", padx=5, pady=5)
 
         FIND_BTN = Button(main_window, background="gray", text="Найти", foreground="black"
                           ).grid(row=4, column=2, sticky="swe", padx=5, pady=5)
@@ -67,13 +65,7 @@ def menu_pick(event):
 
     if selection == 2:
         # destruction of others bottom widgets
-        for t in range(0, 6):
-            for widget in main_window.grid_slaves(row=3, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=4, column=t):
-                widget.destroy()
-            for widget in main_window.grid_slaves(row=5, column=t):
-                widget.destroy()
+        destroy_widgets()
         # developing new bottom widgets
 
 
@@ -149,4 +141,5 @@ AMOUNT_LABEL = Label(main_window, text="amount",
 Grid.columnconfigure(main_window, 4, weight=1)
 
 RIGHT_MENU.bind("<Double-Button-1>", menu_pick)
+
 main_window.mainloop()
