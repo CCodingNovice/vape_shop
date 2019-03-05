@@ -42,6 +42,14 @@ def load_csv_to_df(name='database_example'):
 	return df
 
 
+def change_value(df, item_id, column_name, new_value):
+	"""изменяет значение в дф"""
+	df.at[item_id, column_name] = new_value
+	return df
+
+
 columns = ['type', 'name', 'price']  # column names
 DF = load_csv_to_df()
+print(DF)
+change_value(DF, 55, 'price', 228)
 print(DF)

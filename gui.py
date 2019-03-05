@@ -23,9 +23,9 @@ def menu_pick(event):
                            foreground="orange"
                            ).grid(row=3, column=0, columnspan=6, sticky="swe")
         Grid.rowconfigure(main_window, 3, weight=1)
-        id_etry = Entry(main_window, text="name", background="gray", justify=CENTER
+        id_etry = Entry(main_window, text="id", background="gray", justify=CENTER
                         ).grid(row=4, column=0, sticky="swe", padx=5)
-        type_entry = Entry(main_window, text="name", background="gray", justify=CENTER
+        type_entry = Entry(main_window, text="type", background="gray", justify=CENTER
                            ).grid(row=4, column=1, sticky="swe", padx=5)
         name_entry = Entry(main_window, text="name", background="gray", justify=CENTER
                            ).grid(row=4, column=2, sticky="swe", padx=5)
@@ -33,10 +33,7 @@ def menu_pick(event):
                             ).grid(row=4, column=3, sticky="swe", padx=5)
         amount_entry = Entry(main_window, text="amount", background="gray", justify=CENTER
                              ).grid(row=4, column=4, sticky="swe", padx=5)
-        ADD_BTN = Button(main_window, text="add",
-                         background="gray",
-                         foreground="black"
-                         ).grid(row=4, column=5, sticky="swe")
+        ADD_BTN.grid(row=4, column=5, sticky="swe")
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1
                              ).grid(row=5, column=0, columnspan=5, sticky="nwe")
     if selection == 1:
@@ -78,6 +75,9 @@ MENU_LIST = ["Вставить в БД", "Удалить из БД", "Редак
 main_window.title(u"Vape Shop app")
 main_window.configure(background="#49464c")
 main_window.geometry("800x600")
+
+ADD_BTN = Button(main_window, text="add", background="gray", foreground="black")
+
 
 HELLO_USER = Label(main_window,
                    background="#1c0f21",
