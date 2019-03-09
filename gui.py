@@ -1,4 +1,7 @@
 from tkinter import *
+import tkinter.ttk as ttk
+import pandas as pd
+from shop_database import load_csv_to_df
 
 
 def destroy_widgets():
@@ -11,13 +14,39 @@ def destroy_widgets():
             widget.destroy()
 
 
+def form_table(data):
+    rows = data.shape[0]
+    cols = data.shape[1]
+    curr_width = main_window.winfo_width()
+    table = ttk.Treeview(main_window)
+    table["columns"] = ("one", "two", "three", "four", "five")
+    table['show'] = 'headings'
+    table.heading("one", text="id")
+    table.heading("two", text="type")
+    table.heading("three", text="name")
+    table.heading("four", text="price")
+    table.heading("five", text="amount")
+
+    table.column("one", width=100, minwidth=100, stretch=False)
+    table.column("two", width=170, minwidth=170, stretch=False)
+    table.column("three", width=150, minwidth=150, stretch=False)
+    table.column("four", width=100, minwidth=100, stretch=False)
+    table.column("five", width=100, minwidth=100, stretch=False)
+
+    for j in range(0, rows):
+        lst = [j] + list(data.iloc[j])
+        table.insert("", 'end', text=j, values=lst)
+    table.grid(row=1, column=0, columnspan=6, sticky="nwe")
+    Grid.columnconfigure(main_window, 0, weight=1)
+
+
 def menu_pick(event):
     w = event.widget
     selection = int(w.curselection()[0])
     if selection == 0:
         destroy_widgets()
         # developing new bottom widgets
-
+        ADD_BTN = Button(main_window, text="add", background="gray", foreground="black")
         INFO_LABEL = Label(main_window, text="Вставить в базу данных",
                            background="#1c0f21",
                            foreground="orange"
@@ -76,8 +105,6 @@ main_window.title(u"Vape Shop app")
 main_window.configure(background="#49464c")
 main_window.geometry("800x600")
 
-ADD_BTN = Button(main_window, text="add", background="gray", foreground="black")
-
 
 HELLO_USER = Label(main_window,
                    background="#1c0f21",
@@ -98,6 +125,9 @@ RIGHT_MENU = Listbox(main_window,
                      highlightthickness=0
                      )
 
+df = load_csv_to_df(name='database_example')
+form_table(df)
+
 for i in MENU_LIST:
     RIGHT_MENU.insert(END, i)
 
@@ -105,40 +135,6 @@ RIGHT_MENU.grid(row=1, column=6, sticky="ns", rowspan=5)
 
 Grid.rowconfigure(main_window, 1, weight=1)
 
-ID_LABEL = Label(main_window, text="id",
-                 background="#49464c",
-                 relief=GROOVE,
-                 foreground="orange"
-                 ).grid(row=1, column=0, sticky="nwe")
-Grid.rowconfigure(main_window, 1, weight=1)
-
-TYPE_LABEL = Label(main_window, text="type",
-                   background="#49464c",
-                   relief=GROOVE,
-                   foreground="orange"
-                   ).grid(row=1, column=1, sticky="nwe")
-Grid.columnconfigure(main_window, 1, weight=1)
-
-NAME_LABEL = Label(main_window, text="name",
-                   background="#49464c",
-                   relief=GROOVE,
-                   foreground="orange"
-                   ).grid(row=1, column=2, sticky="nwe")
-Grid.columnconfigure(main_window, 2, weight=2)
-
-PRICE_LABEL = Label(main_window, text="price",
-                    background="#49464c",
-                    relief=GROOVE,
-                    foreground="orange"
-                    ).grid(row=1, column=3, sticky="nwe")
-Grid.columnconfigure(main_window, 3, weight=1)
-
-AMOUNT_LABEL = Label(main_window, text="amount",
-                     background="#49464c",
-                     relief=GROOVE,
-                     foreground="orange"
-                     ).grid(row=1, column=4, sticky="nwe", columnspan=2)
-Grid.columnconfigure(main_window, 4, weight=1)
 
 RIGHT_MENU.bind("<Double-Button-1>", menu_pick)
 
