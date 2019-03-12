@@ -39,7 +39,7 @@ def form_table(data):
     table.column("five", width=100, minwidth=100, stretch=False)
 
     for j in range(0, rows):
-        lst = [j] + list(data.iloc[j])
+        lst = [data.index.tolist()[j]] + list(data.iloc[j])
         table.insert("", 'end', text=j, values=lst)
     table.grid(row=1, column=0, columnspan=6, sticky="nswe")
     Grid.columnconfigure(main_window, 0, weight=1)
