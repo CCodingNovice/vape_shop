@@ -1,7 +1,6 @@
 from tkinter import *
 import tkinter.ttk as ttk
-import pandas as pd
-from shop_database import load_csv_to_df
+from shop_database import *
 
 
 def destroy_widgets():
@@ -74,6 +73,7 @@ def menu_pick(event):
     """
     w = event.widget
     selection = int(w.curselection()[0])
+
     if selection == 0:
         destroy_widgets()
         # developing new bottom widgets
@@ -83,19 +83,33 @@ def menu_pick(event):
                            foreground="orange", font="Arial 12"
                            ).grid(row=3, column=0, columnspan=6, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
-        id_etry = Entry(main_window, text="id", background="gray", justify=CENTER
-                        ).grid(row=4, column=0, sticky="nwe", padx=5)
-        type_entry = Entry(main_window, text="type", background="gray", justify=CENTER
-                           ).grid(row=4, column=1, sticky="nwe", padx=5)
-        name_entry = Entry(main_window, text="name", background="gray", justify=CENTER
-                           ).grid(row=4, column=2, sticky="nwe", padx=5)
-        price_entry = Entry(main_window, text="price", background="gray", justify=CENTER
-                            ).grid(row=4, column=3, sticky="nwe", padx=5)
-        amount_entry = Entry(main_window, text="amount", background="gray", justify=CENTER
-                             ).grid(row=4, column=4, sticky="nwe", padx=5)
+        id_etry = Entry(main_window, text="id", background="gray", justify=CENTER)
+        type_entry = Entry(main_window, text="type", background="gray", justify=CENTER)
+        name_entry = Entry(main_window, text="name", background="gray", justify=CENTER)
+        price_entry = Entry(main_window, text="price", background="gray", justify=CENTER)
+        amount_entry = Entry(main_window, text="amount", background="gray", justify=CENTER)
         ADD_BTN.grid(row=4, column=5, sticky="nwe")
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1
                              ).grid(row=5, column=0, columnspan=5, sticky="nswe")
+
+        def add_to_database(event):
+            """
+            Функция записывает значение в датафрейм,
+            затем сохраняет его и обновляет базу, выведенную на экран
+            :param event: бинд на эту функцию
+            :return:
+            """
+            buffer = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
+            save_df_as_csv(add_to_df(df, buffer), "database_example")
+            form_table(load_csv_to_df())
+
+        ADD_BTN.bind("<Button-1>", add_to_database)
+        id_etry.grid(row=4, column=0, sticky="nwe", padx=5)
+        type_entry.grid(row=4, column=1, sticky="nwe", padx=5)
+        name_entry.grid(row=4, column=2, sticky="nwe", padx=5)
+        price_entry.grid(row=4, column=3, sticky="nwe", padx=5)
+        amount_entry.grid(row=4, column=4, sticky="nwe", padx=5)
+
     if selection == 1:
         # destruction of others bottom widgets
         destroy_widgets()
@@ -116,13 +130,6 @@ def menu_pick(event):
 
         FIND_BTN = Button(main_window, background="gray", text="Найти", foreground="black"
                           ).grid(row=4, column=5, sticky="nwe", padx=5, pady=5)
-
-        Grid.columnconfigure(main_window, 5, weight=1)
-        Grid.columnconfigure(main_window, 4, weight=1)
-        Grid.columnconfigure(main_window, 3, weight=1)
-        Grid.columnconfigure(main_window, 2, weight=1)
-        Grid.columnconfigure(main_window, 1, weight=1)
-        Grid.columnconfigure(main_window, 0, weight=1)
 
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1, text="\n\n"
                              ).grid(row=5, column=0, columnspan=5, sticky="nswe")
@@ -158,7 +165,7 @@ RIGHT_MENU = Listbox(main_window,
                      background="#312b38",
                      foreground="orange",
                      font="Arial 10",
-                     width=25, relief=FLAT,
+                     relief=FLAT,
                      highlightthickness=0
                      )
 
@@ -168,10 +175,17 @@ form_table(df)
 for i in MENU_LIST:
     RIGHT_MENU.insert(END, i)
 
-RIGHT_MENU.grid(row=1, column=6, sticky="ns", rowspan=5)
+RIGHT_MENU.grid(row=1, column=6, sticky="nse", rowspan=5)
 
 Grid.rowconfigure(main_window, 1, weight=1)
 
 RIGHT_MENU.bind("<Double-Button-1>", menu_pick)
+
+Grid.columnconfigure(main_window, 5, weight=1)
+Grid.columnconfigure(main_window, 4, weight=1)
+Grid.columnconfigure(main_window, 3, weight=1)
+Grid.columnconfigure(main_window, 2, weight=1)
+Grid.columnconfigure(main_window, 1, weight=1)
+Grid.columnconfigure(main_window, 0, weight=1)
 
 main_window.mainloop()
