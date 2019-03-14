@@ -4,11 +4,6 @@ import matplotlib.pyplot as plt
 
 
 def load_csv_to_df(name='database_example'):
-	"""
-	загружает ксв файл из папки Data с определенным именем
-	:param name: имя ксв файла без расширения
-	:return: загруженнный дф
-	"""
 	path =  name + '.csv'
 	df = pd.read_csv(filepath_or_buffer=path, index_col=0)
 	return df
@@ -35,8 +30,6 @@ main = Tk()
 
 main.configure(background="#49464c")
 main.geometry("800x600")
-zzz = Frame(main)
-zzz.config(bg='dimgray')
 
 pp = Label(background="#49464c", text=' ')
 pp.grid(row=0, rowspan=4, column=0, columnspan=3)
