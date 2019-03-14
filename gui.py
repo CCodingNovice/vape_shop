@@ -3,6 +3,19 @@ import tkinter.ttk as ttk
 from shop_database import *
 
 
+def is_int(s):
+    """
+    Проверка строки на приводимость к целочисленному числу
+    :param s: входная строка
+    :return:
+    """
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
+
+
 def destroy_widgets():
     """
     Функция удаляет виджеты, которые показывались в другом разделе
@@ -42,6 +55,10 @@ def form_table(data):
     table.heading("five", text="amount")
 
     def set_size():
+        """
+        Функция устанавливает размер колонкам
+        :return:
+        """
         table.column("one", width=int(current_window_width / 7))
         table.column("two", width=int(2 * current_window_width / 7))
         table.column("three", width=int(2 * current_window_width / 7))
@@ -94,6 +111,17 @@ def menu_pick(event):
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1
                              ).grid(row=5, column=0, columnspan=5, sticky="nswe")
 
+        def clear_entries():
+            """
+            Функция очищает виджеты для ввода
+            :return:
+            """
+            id_etry.delete(0, END)
+            type_entry.delete(0, END)
+            name_entry.delete(0, END)
+            price_entry.delete(0, END)
+            amount_entry.delete(0, END)
+
         def add_to_database(event):
             """
             Функция записывает значение в датафрейм,
@@ -110,14 +138,23 @@ def menu_pick(event):
                 else:
                     isEmpty = False
             if not isEmpty:
-                save_df_as_csv(add_to_df(df, buff), "database_example")
-                form_table(load_csv_to_df())
+                if not is_int(buff[0]) or not is_int(buff[3]) or not is_int(buff[4]):
+                    clear_entries()
+                else:
+                    is_primary = False
+                    for key in df.index.tolist():
+                        if key == int(buff[0]):
+                            is_primary = False
+                            break
+                        else:
+                            is_primary = True
+                    if is_primary:
+                        save_df_as_csv(add_to_df(df, buff), "database_example")
+                        form_table(load_csv_to_df())
+                    else:
+                        clear_entries()
             else:
-                id_etry.delete(0, END)
-                type_entry.delete(0, END)
-                name_entry.delete(0, END)
-                price_entry.delete(0, END)
-                amount_entry.delete(0, END)
+                clear_entries()
 
         ADD_BTN.bind("<Button-1>", add_to_database)
         id_etry.grid(row=4, column=0, sticky="nwe", padx=5)
