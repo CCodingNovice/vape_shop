@@ -76,9 +76,14 @@ def load_binary_to_df(name='database_example'):
 	:param name: имя бинарного файла без расширения
 	:return: загруженнный датафрейм
 	"""
+	# TODO придумать как обарабатывать ошибки
 	path = 'Data/' + name + '_binary.pickle'
-	with open(path, 'rb') as f:
-		df = pickle.load(f)
+	try:
+		with open(path, 'rb') as f:
+			df = pickle.load(f)
+	except (FileNotFoundError, pickle.PickleError, pickle.PicklingError, pickle.UnpicklingError):
+		print("something has gone wrong with unpickling...")
+		df = 0
 	return df
 
 
@@ -89,16 +94,21 @@ def change_value(df, item_id, column_name, new_value):
 	:param item_id: айди элемента
 	:param column_name: имя поля
 	:param new_value: новое значение
-	:return: измененный дф
+	:return: измененный дф(скорее всего потом уберу это ибо нахера)
 	"""
-	df.at[item_id, column_name] = new_value
+	try:
+		df.at[item_id, column_name] = new_value
+	except ValueError:
+		print("something has gone wrong with changing")
 	return df
 
 
-columns = ['type', 'name', 'price']  # column names
-DF = load_csv_to_df()
+# DF = load_csv_to_df()
+# print(DF)
+# change_value(DF, 62, "amount", ["lol", 1])
+# print(DF)
+# """
+# print(DF.index.array)
+DF = load_binary_to_df("ll")
 print(DF)
-save_df_as_binary(DF, 'database_example')
-DF1 = load_binary_to_df()
-print(DF1)
 
