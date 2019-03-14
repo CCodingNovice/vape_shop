@@ -5,6 +5,10 @@ from shop_database import load_csv_to_df
 
 
 def destroy_widgets():
+    """
+    Функция удаляет виджеты, которые показывались в другом разделе
+    :return:
+    """
     for t in range(0, 6):
         for widget in main_window.grid_slaves(row=3, column=t):
             widget.destroy()
@@ -15,6 +19,11 @@ def destroy_widgets():
 
 
 def form_table(data):
+    """
+    Функция, которая выводит датафрейм на экран приложения
+    :param data: Датафрейм, который мы выводим
+    :return:
+    """
     rows = data.shape[0]
     cols = data.shape[1]
     table = ttk.Treeview(main_window)
@@ -23,6 +32,7 @@ def form_table(data):
     style.theme_use("clam")
     style.configure("Treeview", background="#49464c",
                     fieldbackground="#49464c", foreground="orange")
+    current_window_width = main_window.winfo_width()
 
     table["columns"] = ("one", "two", "three", "four", "five")
     table['show'] = 'headings'
@@ -32,20 +42,36 @@ def form_table(data):
     table.heading("four", text="price")
     table.heading("five", text="amount")
 
-    table.column("one", width=100, minwidth=100, stretch=False)
-    table.column("two", width=170, minwidth=170, stretch=False)
-    table.column("three", width=150, minwidth=150, stretch=False)
-    table.column("four", width=100, minwidth=100, stretch=False)
-    table.column("five", width=100, minwidth=100, stretch=False)
+    table.column("one", width=int(current_window_width/7))
+    table.column("two", width=int(2 * current_window_width/7))
+    table.column("three", width=int(2 * current_window_width/7))
+    table.column("four", width=int(current_window_width/7))
+    table.column("five", width=int(current_window_width/7))
 
     for j in range(0, rows):
         lst = [data.index.tolist()[j]] + list(data.iloc[j])
         table.insert("", 'end', text=j, values=lst)
+
+    def disable_table_resizing(event):
+        """
+        Функция, которая не дает пользователю менять размер колонок таблицы
+        :param event: бинд на эту функцию
+        :return:
+        """
+        if table.identify_region(event.x, event.y) == "separator":
+            return "break"
+
     table.grid(row=1, column=0, columnspan=6, sticky="nswe")
     Grid.columnconfigure(main_window, 0, weight=1)
+    table.bind("<Button-1>", disable_table_resizing)
 
 
 def menu_pick(event):
+    """
+    С помощью этой функции выводятся на экран инструменты взаимодействия с базой данных
+    :param event: бинд на эту функцию
+    :return:
+    """
     w = event.widget
     selection = int(w.curselection()[0])
     if selection == 0:
@@ -54,7 +80,7 @@ def menu_pick(event):
         ADD_BTN = Button(main_window, text="add", background="gray", foreground="black")
         INFO_LABEL = Label(main_window, text="Вставить в базу данных",
                            background="#1c0f21",
-                           foreground="orange"
+                           foreground="orange", font="Arial 12"
                            ).grid(row=3, column=0, columnspan=6, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
         id_etry = Entry(main_window, text="id", background="gray", justify=CENTER
@@ -76,11 +102,11 @@ def menu_pick(event):
         # developing new bottom widgets
         INFO_LABEL = Label(main_window, text="Удалить из базы данных",
                            background="#1c0f21",
-                           foreground="orange"
+                           foreground="orange", font="Arial 12"
                            ).grid(row=3, column=0, columnspan=6, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
         FIND_ENTRY = Entry(main_window, text="name", background="gray", justify=CENTER
-                           ).grid(row=4, column=0, columnspan=2, sticky="nwe", padx=5, pady=5)
+                           ).grid(row=4, column=1, columnspan=2, sticky="wne", padx=5, pady=5)
         variable = StringVar(main_window)
         variable.set("Все категории")
         find_in_col = OptionMenu(main_window, variable, "Все категории", "id", "type", "name", "amount", "price")
@@ -90,6 +116,13 @@ def menu_pick(event):
 
         FIND_BTN = Button(main_window, background="gray", text="Найти", foreground="black"
                           ).grid(row=4, column=5, sticky="nwe", padx=5, pady=5)
+
+        Grid.columnconfigure(main_window, 5, weight=1)
+        Grid.columnconfigure(main_window, 4, weight=1)
+        Grid.columnconfigure(main_window, 3, weight=1)
+        Grid.columnconfigure(main_window, 2, weight=1)
+        Grid.columnconfigure(main_window, 1, weight=1)
+        Grid.columnconfigure(main_window, 0, weight=1)
 
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1, text="\n\n"
                              ).grid(row=5, column=0, columnspan=5, sticky="nswe")
