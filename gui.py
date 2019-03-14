@@ -41,12 +41,14 @@ def form_table(data):
     table.heading("four", text="price")
     table.heading("five", text="amount")
 
-    table.column("one", width=int(current_window_width/7))
-    table.column("two", width=int(2 * current_window_width/7))
-    table.column("three", width=int(2 * current_window_width/7))
-    table.column("four", width=int(current_window_width/7))
-    table.column("five", width=int(current_window_width/7))
+    def set_size():
+        table.column("one", width=int(current_window_width / 7))
+        table.column("two", width=int(2 * current_window_width / 7))
+        table.column("three", width=int(2 * current_window_width / 7))
+        table.column("four", width=int(current_window_width / 7))
+        table.column("five", width=int(current_window_width / 7))
 
+    set_size()
     for j in range(0, rows):
         lst = [data.index.tolist()[j]] + list(data.iloc[j])
         table.insert("", 'end', text=j, values=lst)
@@ -60,9 +62,9 @@ def form_table(data):
         if table.identify_region(event.x, event.y) == "separator":
             return "break"
 
-    table.grid(row=1, column=0, columnspan=6, sticky="nswe")
-    Grid.columnconfigure(main_window, 0, weight=1)
     table.bind("<Button-1>", disable_table_resizing)
+    table.grid(row=1, column=0, columnspan=6, sticky="nswe")
+    Grid.rowconfigure(main_window, 1, weight=2)
 
 
 def menu_pick(event):
@@ -100,8 +102,22 @@ def menu_pick(event):
             :return:
             """
             buffer = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
-            save_df_as_csv(add_to_df(df, buffer), "database_example")
-            form_table(load_csv_to_df())
+            isEmpty = True
+            for value in buffer:
+                if str(value) == "":
+                    isEmpty = True
+                    break
+                else:
+                    isEmpty = False
+            if not isEmpty:
+                save_df_as_csv(add_to_df(df, buffer), "database_example")
+                form_table(load_csv_to_df())
+            else:
+                id_etry.delete(0, END)
+                type_entry.delete(0, END)
+                name_entry.delete(0, END)
+                price_entry.delete(0, END)
+                amount_entry.delete(0, END)
 
         ADD_BTN.bind("<Button-1>", add_to_database)
         id_etry.grid(row=4, column=0, sticky="nwe", padx=5)
