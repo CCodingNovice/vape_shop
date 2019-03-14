@@ -101,16 +101,16 @@ def menu_pick(event):
             :param event: бинд на эту функцию
             :return:
             """
-            buffer = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
+            buff = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
             isEmpty = True
-            for value in buffer:
+            for value in buff:
                 if str(value) == "":
                     isEmpty = True
                     break
                 else:
                     isEmpty = False
             if not isEmpty:
-                save_df_as_csv(add_to_df(df, buffer), "database_example")
+                save_df_as_csv(add_to_df(df, buff), "database_example")
                 form_table(load_csv_to_df())
             else:
                 id_etry.delete(0, END)
