@@ -36,15 +36,18 @@ def form_table(data):
     :param data: Датафрейм, который мы выводим
     :return:
     """
+    for children in TABLE_FRAME.pack_slaves():
+        children.destroy()
     rows = data.shape[0]
     cols = data.shape[1]
-    table = ttk.Treeview(main_window)
+    table = ttk.Treeview(TABLE_FRAME)
 
-    style = ttk.Style(main_window)
+    style = ttk.Style(TABLE_FRAME)
     style.theme_use("clam")
     style.configure("Treeview", background="#49464c",
                     fieldbackground="#49464c", foreground="orange")
-    current_window_width = main_window.winfo_width()
+    main_window.update_idletasks()
+    current_window_width = TABLE_FRAME.winfo_width()
 
     table["columns"] = ("one", "two", "three", "four", "five")
     table['show'] = 'headings'
@@ -80,7 +83,7 @@ def form_table(data):
             return "break"
 
     table.bind("<Button-1>", disable_table_resizing)
-    table.grid(row=1, column=0, columnspan=6, sticky="nswe")
+    table.pack(fill=BOTH)
     Grid.rowconfigure(main_window, 1, weight=2)
 
 
@@ -130,14 +133,14 @@ def menu_pick(event):
             :return:
             """
             buff = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
-            isEmpty = True
+            is_empty = True
             for value in buff:
                 if str(value) == "":
-                    isEmpty = True
+                    is_empty = True
                     break
                 else:
-                    isEmpty = False
-            if not isEmpty:
+                    is_empty = False
+            if not is_empty:
                 if not is_int(buff[0]) or not is_int(buff[3]) or not is_int(buff[4]):
                     clear_entries()
                 else:
@@ -222,6 +225,9 @@ RIGHT_MENU = Listbox(main_window,
                      highlightthickness=0
                      )
 
+TABLE_FRAME = Frame(main_window, relief=FLAT)
+TABLE_FRAME.grid(row=1, column=0, columnspan=6, sticky=NSEW)
+
 df = load_csv_to_df(name='database_example')
 form_table(df)
 
@@ -230,7 +236,8 @@ for i in MENU_LIST:
 
 RIGHT_MENU.grid(row=1, column=6, sticky="nse", rowspan=5)
 
-Grid.rowconfigure(main_window, 1, weight=1)
+Grid.rowconfigure(main_window, 1, weight=2)
+Grid.rowconfigure(main_window, 3, weight=1)
 
 RIGHT_MENU.bind("<Double-Button-1>", menu_pick)
 
