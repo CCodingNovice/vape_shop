@@ -39,8 +39,7 @@ def form_table(data):
     for children in TABLE_FRAME.pack_slaves():
         children.destroy()
     rows = data.shape[0]
-    cols = data.shape[1]
-    table = ttk.Treeview(TABLE_FRAME)
+    table = ttk.Treeview(TABLE_FRAME, height=22)
 
     style = ttk.Style(TABLE_FRAME)
     style.theme_use("clam")
@@ -105,7 +104,7 @@ def menu_pick(event):
                            foreground="orange", font="Arial 12"
                            ).grid(row=3, column=0, columnspan=6, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
-        id_etry = Entry(main_window, text="id", background="gray", justify=CENTER)
+        id_entry = Entry(main_window, text="id", background="gray", justify=CENTER)
         type_entry = Entry(main_window, text="type", background="gray", justify=CENTER)
         name_entry = Entry(main_window, text="name", background="gray", justify=CENTER)
         price_entry = Entry(main_window, text="price", background="gray", justify=CENTER)
@@ -119,7 +118,7 @@ def menu_pick(event):
             Функция очищает виджеты для ввода
             :return:
             """
-            id_etry.delete(0, END)
+            id_entry.delete(0, END)
             type_entry.delete(0, END)
             name_entry.delete(0, END)
             price_entry.delete(0, END)
@@ -132,7 +131,7 @@ def menu_pick(event):
             :param event: бинд на эту функцию
             :return:
             """
-            buff = [id_etry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
+            buff = [id_entry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
             is_empty = True
             for value in buff:
                 if str(value) == "":
@@ -160,7 +159,7 @@ def menu_pick(event):
                 clear_entries()
 
         ADD_BTN.bind("<Button-1>", add_to_database)
-        id_etry.grid(row=4, column=0, sticky="nwe", padx=5)
+        id_entry.grid(row=4, column=0, sticky="nwe", padx=5)
         type_entry.grid(row=4, column=1, sticky="nwe", padx=5)
         name_entry.grid(row=4, column=2, sticky="nwe", padx=5)
         price_entry.grid(row=4, column=3, sticky="nwe", padx=5)
@@ -225,7 +224,7 @@ RIGHT_MENU = Listbox(main_window,
                      highlightthickness=0
                      )
 
-TABLE_FRAME = Frame(main_window, relief=FLAT)
+TABLE_FRAME = Frame(main_window, relief=FLAT, background="#49464c")
 TABLE_FRAME.grid(row=1, column=0, columnspan=6, sticky=NSEW)
 
 df = load_csv_to_df(name='database_example')
