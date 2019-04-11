@@ -102,14 +102,14 @@ def menu_pick(event):
         INFO_LABEL = Label(main_window, text="Вставить в базу данных",
                            background="#1c0f21",
                            foreground="orange", font="Arial 12"
-                           ).grid(row=3, column=0, columnspan=6, sticky="nwe")
+                           ).grid(row=3, column=0, columnspan=7, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
         id_entry = Entry(main_window, text="id", background="gray", justify=CENTER)
         type_entry = Entry(main_window, text="type", background="gray", justify=CENTER)
         name_entry = Entry(main_window, text="name", background="gray", justify=CENTER)
         price_entry = Entry(main_window, text="price", background="gray", justify=CENTER)
         amount_entry = Entry(main_window, text="amount", background="gray", justify=CENTER)
-        ADD_BTN.grid(row=4, column=5, sticky="nwe")
+        ADD_BTN.grid(row=4, column=5, sticky="nwe", padx=5, pady=5)
         BOTTOM_EMPTY = Label(main_window, background="#49464c", height=1
                              ).grid(row=5, column=0, columnspan=5, sticky="nswe")
 
@@ -159,11 +159,11 @@ def menu_pick(event):
                 clear_entries()
 
         ADD_BTN.bind("<Button-1>", add_to_database)
-        id_entry.grid(row=4, column=0, sticky="nwe", padx=5)
-        type_entry.grid(row=4, column=1, sticky="nwe", padx=5)
-        name_entry.grid(row=4, column=2, sticky="nwe", padx=5)
-        price_entry.grid(row=4, column=3, sticky="nwe", padx=5)
-        amount_entry.grid(row=4, column=4, sticky="nwe", padx=5)
+        id_entry.grid(row=4, column=0, sticky="nwe", padx=5, pady=5)
+        type_entry.grid(row=4, column=1, sticky="nwe", padx=5, pady=5)
+        name_entry.grid(row=4, column=2, sticky="nwe", padx=5, pady=5)
+        price_entry.grid(row=4, column=3, sticky="nwe", padx=5, pady=5)
+        amount_entry.grid(row=4, column=4, sticky="nwe", padx=5, pady=5)
 
     if selection == 1:
         # destruction of others bottom widgets
@@ -172,7 +172,7 @@ def menu_pick(event):
         INFO_LABEL = Label(main_window, text="Удалить из базы данных",
                            background="#1c0f21",
                            foreground="orange", font="Arial 12"
-                           ).grid(row=3, column=0, columnspan=6, sticky="nwe")
+                           ).grid(row=3, column=0, columnspan=7, sticky="nwe")
         Grid.rowconfigure(main_window, 3, weight=1)
         FIND_ENTRY = Entry(main_window, text="name", background="gray", justify=CENTER
                            ).grid(row=4, column=1, columnspan=2, sticky="wne", padx=5, pady=5)
@@ -194,11 +194,16 @@ def menu_pick(event):
         destroy_widgets()
         # developing new bottom widgets
 
+    if selection == 3:
+        # destruction of others bottom widgets
+        destroy_widgets()
+        # creating new window with chart options
+        
 
 main_window = Tk()
 BOTTOM_FRAME = Frame(main_window, bg="#49464c", relief=FLAT).grid(row=3, column=0, columnspan=5, sticky="swe")
 
-MENU_LIST = ["Вставить в БД", "Удалить из БД", "Редактировать БД"]
+MENU_LIST = ["Вставить в БД", "Удалить из БД", "Редактировать БД", "Построение графиков"]
 
 # CONFIGURE MAIN WINDOW
 main_window.title(u"Vape Shop app")
@@ -221,19 +226,19 @@ RIGHT_MENU = Listbox(main_window,
                      foreground="orange",
                      font="Arial 10",
                      relief=FLAT,
-                     highlightthickness=0
+                     highlightthickness=0,
                      )
 
 TABLE_FRAME = Frame(main_window, relief=FLAT, background="#49464c")
 TABLE_FRAME.grid(row=1, column=0, columnspan=6, sticky=NSEW)
 
-df = load_csv_to_df(name='database_example')
+df = load_csv_to_df()
 form_table(df)
 
 for i in MENU_LIST:
     RIGHT_MENU.insert(END, i)
 
-RIGHT_MENU.grid(row=1, column=6, sticky="nse", rowspan=5)
+RIGHT_MENU.grid(row=1, column=6, sticky="nswe", rowspan=5)
 
 Grid.rowconfigure(main_window, 1, weight=2)
 Grid.rowconfigure(main_window, 3, weight=1)
