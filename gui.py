@@ -56,6 +56,11 @@ def form_table(data):
     table.heading("four", text="price")
     table.heading("five", text="amount")
 
+    def get_row_selection(event):
+        selection = table.selection()[0]
+        temp = int(selection.split("I")[1])
+        return temp
+
     def set_size():
         """
         Функция устанавливает размер колонкам
@@ -82,6 +87,7 @@ def form_table(data):
             return "break"
 
     table.bind("<Button-1>", disable_table_resizing)
+    table.bind("<Double-Button-1>", get_row_selection)
     table.pack(fill=BOTH)
     Grid.rowconfigure(main_window, 1, weight=2)
 
@@ -198,7 +204,7 @@ def menu_pick(event):
         # destruction of others bottom widgets
         destroy_widgets()
         # creating new window with chart options
-        
+
 
 main_window = Tk()
 BOTTOM_FRAME = Frame(main_window, bg="#49464c", relief=FLAT).grid(row=3, column=0, columnspan=5, sticky="swe")
