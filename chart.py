@@ -1,13 +1,15 @@
 import pandas as pd
 from tkinter import *
 import matplotlib.pyplot as plt
-
+from shop_database import load_csv_to_df
 
 
 
 
 
 columns = ['type', 'name', 'price', 'amount']
+
+#DF = load_csv_to_df()                      # проблемс: при использовании ваниной функции ломаются цена-тип количество-тип... при использовании ссылки на database - все нормас
 DF = pd.read_csv('/Users/sirazutdinefendiev/Desktop/vape_shop/Data/database_example.csv')
 print(DF)
 
@@ -29,7 +31,7 @@ def AmountName():
 
 def AmountType():
 
-	icol=0
+	icol1=0
 
 	typecol1 = [] # список содержащий элементы type без повторений
 	amountcol = [] # список содержащий количество вейпов всех типов без повторений
@@ -40,14 +42,14 @@ def AmountType():
 
 		while j < len(typecol1):
 			if typecol1[j] == i:
-				amountcol[j] += DF['amount'][icol]
+				amountcol[j] += DF['amount'][icol1]
 				flag = True
 			j += 1
 		if not flag:
 			typecol1.append(i)
-			amountcol.append(DF['amount'][icol])
+			amountcol.append(DF['amount'][icol1])    ########
 
-		icol += 1
+		icol1 += 1
 
 	plt.pie(amountcol, labels=amountcol, shadow=5, autopct='%1.1f%%')
 	plt.title("Количество - Тип")
