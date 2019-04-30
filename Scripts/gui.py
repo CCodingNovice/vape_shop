@@ -1,6 +1,6 @@
 from tkinter import *
 import tkinter.ttk as ttk
-from shop_database import *
+from Scripts.shop_database import *
 
 
 def is_int(s):
