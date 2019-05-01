@@ -16,7 +16,7 @@ def save_chart(name, name_chart):
 
 
 def plot_the_graph():
-	columns = ['type', 'name', 'price', 'amount']
+	#columns = ['type', 'name', 'price', 'amount']
 
 	DF = load_csv_to_df('database_example')
 
@@ -171,10 +171,13 @@ def plot_the_graph():
 			PriceType()
 
 	options = ["Цена - Имя", "Количество - Имя", "Количество - Тип", "Цена - Тип"]
-	var = StringVar()
+	var = StringVar(main)
 	var.set("Выбрать график")
 
-	drop = OptionMenu(main, var, *options, command=func).pack(expand=1)
+
+	drop = OptionMenu(main, var, *options, command=func)
+	drop.config(width=16, bg='#49464c', height=2)
+	drop.pack(expand=1)
 
 	main.mainloop()
 
