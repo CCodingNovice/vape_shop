@@ -1,6 +1,7 @@
 from tkinter import *
 import tkinter.ttk as ttk
 from Scripts.shop_database import *
+from Scripts.chart import plot_the_graph
 
 
 def is_int(s):
@@ -204,6 +205,7 @@ def menu_pick(event):
         # destruction of others bottom widgets
         destroy_widgets()
         # creating new window with chart options
+        plot_the_graph()
 
 
 main_window = Tk()

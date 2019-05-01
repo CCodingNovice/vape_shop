@@ -1,10 +1,9 @@
 import pandas as pd
 from tkinter import *
 import matplotlib.pyplot as plt
-from shop_database import load_csv_to_df
+from Scripts.shop_database import load_csv_to_df
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
-
 
 
 def save_chart(name, name_chart):
@@ -12,7 +11,6 @@ def save_chart(name, name_chart):
 	Сохраняет пайчарТ в папку Output
 	"""
 	name_chart.savefig('Output/' + str(name) + '.png', bbox_inches='tight')
-
 
 
 def plot_the_graph():
@@ -44,8 +42,6 @@ def plot_the_graph():
 		save_chart('PriceName', pn)
 		chart1.mainloop()
 
-
-
 	def AmountName():
 		"""
 		строит пайчарТ Количество - Имя
@@ -66,8 +62,6 @@ def plot_the_graph():
 		plot_widget.pack()
 		save_chart('AmountName', an)
 		chart2.mainloop()
-
-
 
 	def AmountType():
 		"""
@@ -90,7 +84,6 @@ def plot_the_graph():
 				typecol1.append(DF['type'][i])
 				amountcol.append(DF['amount'][i])
 
-
 		plt.pie(amountcol, labels=amountcol, shadow=5, autopct='%1.1f%%', radius = 0.8, textprops={'size': 'smaller'})
 		plt.title("Количество - Тип")
 		plt.legend(loc='upper center', bbox_to_anchor=(0.5, 0.1), shadow=True, ncol=3, labels=typecol1, prop={'size': "smaller"})
@@ -106,8 +99,6 @@ def plot_the_graph():
 		plot_widget.pack()
 		save_chart('AmountType', at)
 		chart3.mainloop()
-
-
 
 	def PriceType():
 		"""
@@ -137,9 +128,6 @@ def plot_the_graph():
 		plt.title("Цена - Тип")
 		plt.legend(loc='upper center', bbox_to_anchor=(0.5, 0.1), shadow=True, ncol=3, labels=typecol2, prop={'size': "smaller"})
 
-
-
-
 		pt = plt.figure(1)
 		pt.patch.set_facecolor('xkcd:gray')
 		canvas = FigureCanvasTkAgg(pt, master=chart4)
@@ -150,15 +138,11 @@ def plot_the_graph():
 		save_chart('PriceType', pt)
 		chart4.mainloop()
 
-
-
 	matplotlib.use('TkAgg')
 
 	main = Tk()
 	main.config(bg='#49464c')
 	main.geometry("250x150+600+300")
-
-
 
 	def func(value):
 		if str(value) == "Цена - Имя":
@@ -177,6 +161,3 @@ def plot_the_graph():
 	drop = OptionMenu(main, var, *options, command=func).pack(expand=1)
 
 	main.mainloop()
-
-
-plot_the_graph()
