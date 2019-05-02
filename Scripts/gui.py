@@ -200,6 +200,7 @@ def menu_pick(event):
         # destruction of others bottom widgets
         destroy_widgets()
         # developing new bottom widgets
+        # TODO сделать редактирование бд
 
     if selection == 3:
         # destruction of others bottom widgets
