@@ -1,7 +1,7 @@
-,type,name,price
-62,mod,dna,9999
-55,set,kangertech,5999
-57,dripka,petri,10999
-37,set,istick 200w,4999
-22,liquid,milkman,2500
-123,mod,fuchai,3999
+,type,name,price,amount
+0,321,norm,3232131223.0,3212313.0
+1,set,kangertech,5999.0,20.0
+2,mod,petri,10999.0,90.0
+3,set,istick 200w,4999.0,0.0
+4,liquid,milkman,2500.0,4534.0
+5,mod,fuchai,3999.0,9.0
