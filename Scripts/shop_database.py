@@ -1,7 +1,7 @@
 import pandas as pd
 import pickle
-
-
+import os
+#TODO сделать пути стильно и модно с помощью os
 def create_new_df(cols):
 	"""
 	создает новый дф
@@ -41,7 +41,7 @@ def save_df_as_csv(df, name):
 	:param name: имя сохраняемого дф без расширения
 	:return: путь до сохраненного файла
 	"""
-	path = 'Data/' + name + '.csv'
+	path = '../Data/' + name + '.csv'
 	df.to_csv(path_or_buf=path)
 	return path
 
@@ -53,7 +53,7 @@ def save_df_as_binary(df, name):
 	:param name: имя сохраненняемого файла
 	:return: путь до него
 	"""
-	path = 'Data/' + name + '_binary.pickle'
+	path = '../Data/' + name + '_binary.pickle'
 	with open(path, 'wb') as f:
 		pickle.dump(df, f)
 	return path
@@ -65,7 +65,7 @@ def load_csv_to_df(name='database_example'):
 	:param name: имя ксв файла без расширения
 	:return: загруженнный дф
 	"""
-	path = 'Data/' + name + '.csv'
+	path = '../Data/' + name + '.csv'
 	df = pd.read_csv(filepath_or_buffer=path, index_col=0)
 	return df
 
@@ -77,7 +77,7 @@ def load_binary_to_df(name='database_example'):
 	:return: загруженнный датафрейм
 	"""
 	# TODO придумать как обарабатывать ошибки
-	path = 'Data/' + name + '_binary.pickle'
+	path = '../Data/' + name + '_binary.pickle'
 	try:
 		with open(path, 'rb') as f:
 			df = pickle.load(f)
