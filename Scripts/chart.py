@@ -10,7 +10,7 @@ def save_chart(name, name_chart):
 	"""
 	Сохраняет пайчарТ в папку Output
 	"""
-	name_chart.savefig('Output/' + str(name) + '.png', bbox_inches='tight')
+	name_chart.savefig('../Output/' + str(name) + '.png', bbox_inches='tight')
 
 
 def plot_the_graph():
