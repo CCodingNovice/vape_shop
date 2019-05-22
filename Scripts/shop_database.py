@@ -103,12 +103,12 @@ def change_value(df, item_id, column_name, new_value):
 	return df
 
 
-# DF = load_csv_to_df()
-# print(DF)
-# change_value(DF, 62, "amount", ["lol", 1])
-# print(DF)
-# """
-# print(DF.index.array)
-DF = load_binary_to_df("ll")
-print(DF)
-
+if __name__ == "__main__":
+	# DF = load_csv_to_df()
+	# print(DF)
+	# change_value(DF, 62, "amount", ["lol", 1])
+	# print(DF)
+	# """
+	# print(DF.index.array)
+	DF = load_binary_to_df("ll")
+	print(DF)
