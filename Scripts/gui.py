@@ -49,9 +49,8 @@ def form_table(data):
     main_window.update_idletasks()
     current_window_width = TABLE_FRAME.winfo_width()
 
-    table["columns"] = ("null", "one", "two", "three", "four", "five")
+    table["columns"] = ("one", "two", "three", "four", "five")
     table['show'] = 'headings'
-    table.heading("null", text="index")
     table.heading("one", text="id")
     table.heading("two", text="type")
     table.heading("three", text="name")
@@ -68,7 +67,6 @@ def form_table(data):
         Функция устанавливает размер колонкам
         :return:
         """
-        table.column("null", width=int(current_window_width / 7))
         table.column("one", width=int(current_window_width / 7))
         table.column("two", width=int(2 * current_window_width / 7))
         table.column("three", width=int(2 * current_window_width / 7))
@@ -77,7 +75,7 @@ def form_table(data):
 
     set_size()
     for j in range(0, rows):
-        lst = [j] + [data.index.tolist()[j]] + list(data.iloc[j])
+        lst = [data.index.tolist()[j]] + list(data.iloc[j])
         table.insert("", 'end', text=j, values=lst)
 
     def disable_table_resizing(event):
@@ -239,7 +237,6 @@ def menu_pick(event):
         def save_changed_row():
             id = int(id_entry.get())
             df = load_csv_to_df("database_example")
-            id = df.index.tolist()[id]
             changed_df = change_value(df, item_id=id, column_name="type",
                                       new_value=type_entry.get())
             changed_df = change_value(changed_df, item_id=id, column_name="name", new_value=name_entry.get())

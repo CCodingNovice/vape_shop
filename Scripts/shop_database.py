@@ -36,7 +36,7 @@ def delete_from_df(df, item_id):
 
 def get_from_df(index):
 	df = load_csv_to_df("database_example")
-	return df.iloc[int(index)]
+	return df.loc[int(index)]
 
 
 def save_df_as_csv(df, name):
@@ -109,11 +109,12 @@ def change_value(df, item_id, column_name, new_value):
 
 
 if __name__ == "__main__":
-	# DF = load_csv_to_df()
-	# print(DF)
+	DF = load_csv_to_df()
+	print(DF)
+	print(get_from_df(62))
 	# change_value(DF, 62, "amount", ["lol", 1])
 	# print(DF)
 	# """
 	# print(DF.index.array)
-	DF = load_binary_to_df("ll")
-	print(DF)
+	# DF = load_binary_to_df("ll")
+	# print(DF)
