@@ -49,8 +49,9 @@ def form_table(data):
     main_window.update_idletasks()
     current_window_width = TABLE_FRAME.winfo_width()
 
-    table["columns"] = ("one", "two", "three", "four", "five")
+    table["columns"] = ("null", "one", "two", "three", "four", "five")
     table['show'] = 'headings'
+    table.heading("null", text="index")
     table.heading("one", text="id")
     table.heading("two", text="type")
     table.heading("three", text="name")
@@ -67,6 +68,7 @@ def form_table(data):
         Функция устанавливает размер колонкам
         :return:
         """
+        table.column("null", width=int(current_window_width / 7))
         table.column("one", width=int(current_window_width / 7))
         table.column("two", width=int(2 * current_window_width / 7))
         table.column("three", width=int(2 * current_window_width / 7))
@@ -75,7 +77,7 @@ def form_table(data):
 
     set_size()
     for j in range(0, rows):
-        lst = [data.index.tolist()[j]] + list(data.iloc[j])
+        lst = [j] + [data.index.tolist()[j]] + list(data.iloc[j])
         table.insert("", 'end', text=j, values=lst)
 
     def disable_table_resizing(event):
@@ -199,8 +201,85 @@ def menu_pick(event):
     if selection == 2:
         # destruction of others bottom widgets
         destroy_widgets()
+        # call new window with search
         # developing new bottom widgets
-        # TODO сделать редактирование бд
+
+        INFO_LABEL = Label(main_window, text="Редактирование базы данных",
+                           background="#1c0f21",
+                           foreground="orange", font="Arial 12"
+                           ).grid(row=3, column=0, columnspan=7, sticky="nwe")
+        Grid.rowconfigure(main_window, 3, weight=1)
+
+        def clear_entries():
+            """
+            Функция очищает виджеты для ввода
+            :return:
+            """
+            id_entry.delete(0, END)
+            type_entry.delete(0, END)
+            name_entry.delete(0, END)
+            price_entry.delete(0, END)
+            amount_entry.delete(0, END)
+
+        def show_data(index):
+            """
+            Функция выводит данные строки датафрейма по индексу
+            :param index: индекс  строки  в датафрейме
+            :return:
+            """
+            # получение данных по индексу, так как в csv файле нет колонки index то df[""] если появится то df["index"]
+            clear_entries()
+            df = get_from_df(index).values
+            id_entry.insert(0, index)
+            type_entry.insert(0, df[0])
+            name_entry.insert(0, df[1])
+            price_entry.insert(0, df[2])
+            amount_entry.insert(0, df[3])
+
+        def save_changed_row():
+            id = int(id_entry.get())
+            df = load_csv_to_df("database_example")
+            id = df.index.tolist()[id]
+            changed_df = change_value(df, item_id=id, column_name="type",
+                                      new_value=type_entry.get())
+            changed_df = change_value(changed_df, item_id=id, column_name="name", new_value=name_entry.get())
+            changed_df = change_value(changed_df, item_id=id, column_name="price", new_value=price_entry.get())
+            changed_df = change_value(changed_df, item_id=id, column_name="amount", new_value=amount_entry.get())
+            save_df_as_csv(changed_df, "database_example")
+            form_table(df)
+
+        def index_search():
+            """
+            Функция выводит окно с поиском по индексу
+            :return: индекс в dataframe
+            """
+
+            # Создает отдельное окно с вводом индекса и поиску по кнопке
+            sec_window = Tk()
+            sec_window.config(bg='#49464c')
+            id_search = Entry(sec_window, text="id", background="gray", justify=CENTER)
+            SEARCH_BTN = Button(sec_window, text="search", background="gray", foreground="black",
+                                command=lambda: show_data(id_search.get()))
+            SEARCH_BTN.grid(row=2, column=1, sticky="nesw", padx=5, pady=5)
+            id_search.grid(row=1, column=1, sticky="nesw", padx=5, pady=5)
+
+        # BUTTONS
+        CONFIRM_BTN = Button(main_window, text="save", background="gray", foreground="black",
+                             command=lambda: save_changed_row())
+        CONFIRM_BTN.grid(row=4, column=5, sticky="nwe", padx=5, pady=5)
+        #
+        id_entry = Entry(main_window, text="id", background="gray", justify=CENTER)
+        type_entry = Entry(main_window, text="type", background="gray", justify=CENTER)
+        name_entry = Entry(main_window, text="name", background="gray", justify=CENTER)
+        price_entry = Entry(main_window, text="price", background="gray", justify=CENTER)
+        amount_entry = Entry(main_window, text="amount", background="gray", justify=CENTER)
+        id_entry.grid(row=4, column=0, sticky="nwe", padx=5, pady=5)
+        type_entry.grid(row=4, column=1, sticky="nwe", padx=5, pady=5)
+        name_entry.grid(row=4, column=2, sticky="nwe", padx=5, pady=5)
+        price_entry.grid(row=4, column=3, sticky="nwe", padx=5, pady=5)
+        amount_entry.grid(row=4, column=4, sticky="nwe", padx=5, pady=5)
+
+        index_search()
 
     if selection == 3:
         # destruction of others bottom widgets

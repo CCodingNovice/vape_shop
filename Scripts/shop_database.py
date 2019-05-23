@@ -34,6 +34,11 @@ def delete_from_df(df, item_id):
 	return df
 
 
+def get_from_df(index):
+	df = load_csv_to_df("database_example")
+	return df.iloc[int(index)]
+
+
 def save_df_as_csv(df, name):
 	"""
 
