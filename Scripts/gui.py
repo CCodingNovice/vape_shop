@@ -8,7 +8,7 @@ def is_int(s):
     """
     Проверка строки на приводимость к целочисленному числу
     :param s: входная строка
-    :return:
+    Автор: Дубровский Никита
     """
     try:
         int(s)
@@ -20,7 +20,7 @@ def is_int(s):
 def destroy_widgets():
     """
     Функция удаляет виджеты, которые показывались в другом разделе
-    :return:
+    Автор: Дубровский Никита
     """
     for t in range(0, 6):
         for widget in main_window.grid_slaves(row=3, column=t):
@@ -35,7 +35,7 @@ def form_table(data):
     """
     Функция, которая выводит датафрейм на экран приложения
     :param data: Датафрейм, который мы выводим
-    :return:
+    Автор: Дубровский Никита
     """
     for children in TABLE_FRAME.pack_slaves():
         children.destroy()
@@ -58,6 +58,12 @@ def form_table(data):
     table.heading("five", text="amount")
 
     def get_row_selection(event):
+        """
+        Считывание выбора строки
+        :param event: бинд на функцию
+        :return: номер строки таблицы
+        Автор: Дубровский Никита
+        """
         selection = table.selection()[0]
         temp = int(selection.split("I")[1])
         return temp
@@ -65,7 +71,7 @@ def form_table(data):
     def set_size():
         """
         Функция устанавливает размер колонкам
-        :return:
+        Автор: Дубровский Никита
         """
         table.column("one", width=int(current_window_width / 7))
         table.column("two", width=int(2 * current_window_width / 7))
@@ -82,7 +88,8 @@ def form_table(data):
         """
         Функция, которая не дает пользователю менять размер колонок таблицы
         :param event: бинд на эту функцию
-        :return:
+        :return:отменяет действия с изменением размера
+        Автор: Дубровский Никита
         """
         if table.identify_region(event.x, event.y) == "separator":
             return "break"
@@ -97,7 +104,7 @@ def menu_pick(event):
     """
     С помощью этой функции выводятся на экран инструменты взаимодействия с базой данных
     :param event: бинд на эту функцию
-    :return:
+    Автор: Дубровский Никита
     """
     w = event.widget
     selection = int(w.curselection()[0])
@@ -123,7 +130,7 @@ def menu_pick(event):
         def clear_entries():
             """
             Функция очищает виджеты для ввода
-            :return:
+            Автор: Дубровский Никита
             """
             id_entry.delete(0, END)
             type_entry.delete(0, END)
@@ -136,7 +143,7 @@ def menu_pick(event):
             Функция записывает значение в датафрейм,
             затем сохраняет его и обновляет базу, выведенную на экран
             :param event: бинд на эту функцию
-            :return:
+            Автор: Дубровский Никита
             """
             buff = [id_entry.get(), type_entry.get(), name_entry.get(), price_entry.get(), amount_entry.get()]
             is_empty = True
