@@ -1,7 +1,11 @@
 import pandas as pd
 import pickle
 import os
-#TODO сделать пути стильно и модно с помощью os
+
+
+# TODO сделать пути стильно и модно с помощью os
+
+
 def create_new_df(cols):
 	"""
 	создает новый дф
@@ -53,7 +57,6 @@ def save_df_as_csv(df, name):
 
 def save_df_as_binary(df, name):
 	"""
-	честно говоря не ебу что это но в тз есть значит надо
 	:param df:наш дф
 	:param name: имя сохраненняемого файла
 	:return: путь до него
@@ -99,7 +102,7 @@ def change_value(df, item_id, column_name, new_value):
 	:param item_id: айди элемента
 	:param column_name: имя поля
 	:param new_value: новое значение
-	:return: измененный дф(скорее всего потом уберу это ибо нахера)
+	:return: измененный дф
 	"""
 	try:
 		df.at[item_id, column_name] = new_value

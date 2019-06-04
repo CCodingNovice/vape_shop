@@ -1,7 +1,6 @@
-import pandas as pd
 from tkinter import *
 import matplotlib.pyplot as plt
-from Scripts.shop_database import load_csv_to_df
+from Library.shop_database import load_csv_to_df
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib
 
