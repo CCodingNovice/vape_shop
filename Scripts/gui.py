@@ -1,7 +1,13 @@
 from tkinter import *
 import tkinter.ttk as ttk
+import os
 from Library.shop_database import *
 from Library.chart import plot_the_graph
+
+
+print(os.getcwd())
+os.chdir('../')
+print(os.getcwd())
 
 
 def is_int(s):
@@ -100,7 +106,7 @@ def form_table(data):
     Grid.rowconfigure(main_window, 1, weight=2)
 
 
-def menu_pick(event):
+def menu_pick(event) :
     """
     С помощью этой функции выводятся на экран инструменты взаимодействия с базой данных
     :param event: бинд на эту функцию
@@ -195,7 +201,10 @@ def menu_pick(event):
         def delete(event):
             id_item = FIND_ENTRY.get()
             if is_int(id_item):
-                delete_from_df(df, int(id_item))
+                df = load_csv_to_df()
+                df = delete_from_df(df, int(id_item))
+                save_df_as_csv(df, 'database_example')
+                form_table(df)
             else:
                 FIND_ENTRY.delete(0, END)
 
