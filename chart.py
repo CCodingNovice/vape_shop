@@ -10,6 +10,8 @@ import matplotlib
 def save_chart(name, name_chart):
 	"""
 	Сохраняет пайчарТ в папку Output
+    
+    Выполнил Эфендиев С.В.
 	"""
 	name_chart.savefig('Output/' + str(name) + '.png', bbox_inches='tight')
 
@@ -24,6 +26,8 @@ def plot_the_graph():
 
 		"""
 		строит пайчарТ Цена - Имя
+        
+        Выполнил Эфендиев С.В.
 		"""
 		plt.clf()
 		plt.pie(DF['price'], labels= DF['price'], shadow=5, autopct='%1.1f%%', radius = 0.8, textprops={'size': 'smaller'})
@@ -49,6 +53,8 @@ def plot_the_graph():
 	def AmountName():
 		"""
 		строит пайчарТ Количество - Имя
+        
+        Выполнил Эфендиев С.В.
 		"""
 		plt.clf()
 		plt.pie(DF['amount'], labels=DF['amount'], shadow=5, autopct='%1.1f%%', radius = 0.8, textprops={'size': 'smaller'})
@@ -72,6 +78,8 @@ def plot_the_graph():
 	def AmountType():
 		"""
 		строит пайчарТ Количество - Тип
+        
+        Выполнил Эфендиев С.В.
 		"""
 
 		typecol1 = [] # список содержащий элементы type без повторений
@@ -112,6 +120,8 @@ def plot_the_graph():
 	def PriceType():
 		"""
 		строит пайчарТ Цена - Тип
+        
+        Выполнил Эфендиев С.В.
 		"""
 		typecol2=[] # список содержащий элементы type без повторений
 		pricecol=[] # список содержащий цену вейпов всех типов без повторений
