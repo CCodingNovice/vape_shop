@@ -39,6 +39,7 @@ def plot_the_graph():
 
 		plot_widget.pack()
 		save_chart('PriceName', pn)
+		chart1.title(u"graph")
 		chart1.mainloop()
 
 	def AmountName():
@@ -60,6 +61,7 @@ def plot_the_graph():
 
 		plot_widget.pack()
 		save_chart('AmountName', an)
+		chart2.title(u"graph")
 		chart2.mainloop()
 
 	def AmountType():
@@ -97,6 +99,7 @@ def plot_the_graph():
 
 		plot_widget.pack()
 		save_chart('AmountType', at)
+		chart3.title(u"graph")
 		chart3.mainloop()
 
 	def PriceType():
@@ -135,6 +138,7 @@ def plot_the_graph():
 
 		plot_widget.pack()
 		save_chart('PriceType', pt)
+		chart4.title(u"graph")
 		chart4.mainloop()
 
 	matplotlib.use('TkAgg')
@@ -160,5 +164,6 @@ def plot_the_graph():
 	drop = OptionMenu(main, var, *options, command=func)
 	drop.config(width=16, bg='#49464c', height=2)
 	drop.pack(expand=1)
+	main.title(u"vape - graphs")
 
 	main.mainloop()

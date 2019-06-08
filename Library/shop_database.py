@@ -2,7 +2,7 @@ import pandas as pd
 import pickle
 
 
-# TODO сделать пути стильно и модно с помощью os
+# весь файл под авторством Седых Ивана
 
 
 def create_new_df(cols):
@@ -83,7 +83,6 @@ def load_binary_to_df(name='database_example'):
 	:param name: имя бинарного файла без расширения
 	:return: загруженнный датафрейм
 	"""
-	# TODO придумать как обарабатывать ошибки
 	path = 'Data/' + name + '_binary.pickle'
 	try:
 		with open(path, 'rb') as f:

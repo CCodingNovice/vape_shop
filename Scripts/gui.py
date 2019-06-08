@@ -1,13 +1,17 @@
 from tkinter import *
 import tkinter.ttk as ttk
 import os
+import sys
+
+
+workDir = "../"
+sys.path.insert(0, workDir)  # some magic
 from Library.shop_database import *
 from Library.chart import plot_the_graph
 
 
-print(os.getcwd())
-os.chdir('../')
-print(os.getcwd())
+os.chdir('../')  # more magic
+
 
 
 def is_int(s):
