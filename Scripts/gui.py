@@ -203,6 +203,11 @@ def menu_pick(event) :
                        ).grid(row=4, column=0, sticky="nswe")
 
         def delete(event):
+            """
+            Функция удаляет строку из базы данных по индексу
+            :param event: бинд на эту функцию
+            Автор: Дубровский Никита
+            """
             id_item = FIND_ENTRY.get()
             if is_int(id_item):
                 df = load_csv_to_df()
